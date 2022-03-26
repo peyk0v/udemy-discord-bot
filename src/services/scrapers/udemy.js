@@ -1,8 +1,19 @@
-const puppeteer = require('puppeteer')
 const createPageIn = require('./utils') 
 
-async function getUdemyData(link) {
-  const { page, browser } = await createPageIn(link)
+async function getUdemyData(urls) {
+  let coursesData = []
+
+  //again.. can't use Promise.all 
+  for(let url of urls) {
+    const courseData = await getPageData(url)
+    coursesData.push(courseData)
+  }
+
+  return coursesData
+}
+
+async function getPageData(url) {
+  const { page, browser } = await createPageIn(url)
   
   const data = await page.evaluate(() => {
     const imageUrl = document.querySelector("meta[property='og:image']").getAttribute("content");
@@ -10,11 +21,10 @@ async function getUdemyData(link) {
     const rating = document.querySelector('.clp-lead__element-item--row .star-rating--rating-number--2o8YM').textContent
     return { imageUrl, title, rating } 
   })
-  console.log({data})
+
   browser.close()
+  return data
 }
 
-const freeCourse = 'https://www.udemy.com/course/10-claves-para-una-comunicacion-exitosa/'
-const couponCourse = 'https://www.udemy.com/course/el-arte-de-programar-en-r-anade-valor-a-tu-cv/?couponCode=72F3EC3C7524557A6CBD'
+module.exports = { getUdemyData }
 
-getUdemyData(couponCourse)

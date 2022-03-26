@@ -69,4 +69,4 @@ async function getUdemyLink(link) {
   return udemyLink
 }
 
-module.exports = getCourses
+module.exports = { getCourses }
