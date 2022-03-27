@@ -3,16 +3,20 @@ const createPageIn = require('./utils')
 
 const languageRegex = /\/(english|spanish)\//gi
 
-const langLinks = {
-  english: 'https://www.discudemy.com/language/english',
-  spanish: 'https://www.discudemy.com/language/spanish'
-}
+//TODO: ponerlos en variables de entorno
+const langLinks = [ 
+  english = 'https://www.discudemy.com/language/english',
+  spanish = 'https://www.discudemy.com/language/spanish'
+]
 
 async function getCourses() {
-  const englishCourses = await getUdemyLinksFromPage(langLinks.english)    
-  console.log({englishCourses})
-  //const spanishCourses = await getUdemyLinksFromPage(langLinks.spanish)
-  //return {englishCourses, spanishCourses}
+  const courses = await Promise.all(
+    langLinks.map(async language => {
+      return await getUdemyLinksFromPage(language)    
+    })
+  )
+
+  return courses[0].concat(courses[1])
 }
 
 async function getUdemyLinksFromPage(link) {

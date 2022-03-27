@@ -26,5 +26,5 @@ async function getPageData(url) {
   return data
 }
 
-module.exports = { getUdemyData }
+module.exports = { getPageData }
 

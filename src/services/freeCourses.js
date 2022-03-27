@@ -3,8 +3,31 @@ const discudemyScraper = require('./scrapers/discudemy.js')
 
 async function getCourses() {
   const discudemyCourses = await discudemyScraper.getCourses() 
-  const urls = getUdemyUrls(discudemyCourses) //TODO
-  const udemyCoursesData = await udemyScraper.getUdemyData(urls)
-  return wrapData(discudemyCourses, udemyCoursesData) //TODO
+  const coursesData = await getUdemyData(discudemyCourses)
+  return coursesData 
 }
 
+async function getUdemyData(dCourses) {
+  let coursesData = []
+
+  for(let dCourse of dCourses) {
+    const courseDataFromUdemy = await udemyScraper.getPageData(dCourse.udemyLink)
+    const freeCourseData = wrapData(dCourse, courseDataFromUdemy)
+    coursesData.push(freeCourseData)
+  }
+
+  return coursesData
+}
+
+function wrapData(dCourse, courseDataFromUdemy) {
+    return {
+      discudemyLink: dCourse.discudemyLink,
+      category: dCourse.category,
+      udemyLink: dCourse.udemyLink,
+      image: courseDataFromUdemy.imageUrl,
+      title: courseDataFromUdemy.title,
+      rating: courseDataFromUdemy.rating
+    }
+}
+
+getCourses()
