@@ -1,9 +1,15 @@
-const channelsFromServer = require('./utils')
+const { channelsFromServer, sendEmbedMessage, MSG_TYPE } = require('./utils')
 const Subscriber = require('../schemas/subscriber')
 
-function setChannel(msg) { //TODO: try catch
-  const channel = getChannelToSet(msg)
-  setChannel(channel, msg.guild.id)
+async function setChannel(msg) { 
+  try {
+    const channel = getChannelToSet(msg)
+    await saveChannel(channel, msg.guild.id)
+    const text = createTextToSend(channel)
+    sendEmbedMessage(msg, text, MSG_TYPE.SUCCESS)
+  } catch (e) {
+    sendEmbedMessage(msg, e.message, MSG_TYPE.FAILURE)
+  }
 }
 
 function getChannelToSet({ content, guild }) {
@@ -25,11 +31,15 @@ function verifyChannelNumber(channelNumber, channels) {
   }
 }
 
-function setChannel(channel, serverID) {
-  //TODO
-  //aca habria dos opciones
-  //  que el usuario ya configuro un canal pero lo quiere cambiar
-  //  que es la primera vez que setea un canal
+async function saveChannel({ id, name }, serverID) {
+  const query = { server_id: serverID }
+  const update = { server_id: serverID, channel_id: id, channel_name: name }
+  const options = { upsert: true, new: true }
+  return await Subscriber.findOneAndUpdate(query, update, options);
+}
+
+function createTextToSend(channel) {
+  return `***${channel.name}*** has been set as receiver of courses`
 }
 
 module.exports = setChannel

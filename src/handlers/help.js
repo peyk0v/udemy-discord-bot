@@ -1,12 +1,15 @@
-const channelsFromServer = require('./utils')
+const { channelsFromServer, sendEmbedMessage, MSG_TYPE } = require('./utils')
 
 function sendHelpText(msg) {
-  const channels = channelsFromServer(msg.guild)
-  const channelsAsString = parseChannels(channels)
-  const textToSend = createHelpText(channelsAsString)
-  sendEmbedMessage(msg, textToSend)
+  try {
+    const channels = channelsFromServer(msg.guild)
+    const channelsAsString = parseChannels(channels)
+    const textToSend = createHelpText(channelsAsString)
+    sendEmbedMessage(msg, textToSend, MSG_TYPE.SUCCESS)
+  } catch(e) {
+    sendEmbedMessage(msg, e.message, MSG_TYPE.FAILURE)
+  }
 }
-
 
 function parseChannels(channels) {
   let text = ''
@@ -17,20 +20,24 @@ function parseChannels(channels) {
 }
 
 function createHelpText(channelsAsString) {
-  const header = 'well this will be the header' 
+  const header = 'I see you are lost.. LOL' 
     + '\n'
-    + 'before starting, make sure to set a channel to recieve the courses'
     + '\n'
-    + 'it can be done by `!fc_setChannel number`'
+    + 'There is not much to it to set up the bot.'
     + '\n'
-    + 'where __number__ is one of listed channels below'
+    + 'You just have to set which channel will be the target for the bot to publish the found courses.'
+    + '\n'
+    + '\n'
+    + 'So before starting, make sure to set a channel.'
+    + '\n'
+    + 'It can be done by'
+    + '\n'
+    + '`!fc_setChannel number`'
+    + '\n'
+    + 'where __number__ is the desired channel listed below.'
     + '\n'
     + '\n'
   return header + channelsAsString
-}
-
-function sendEmbedMessage(msg, textToSend) {
-  msg.channel.send({ embeds: [{ color: 0x548f6f, description: textToSend }] })
 }
 
 module.exports = sendHelpText
