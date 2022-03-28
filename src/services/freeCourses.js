@@ -4,6 +4,7 @@ const discudemyScraper = require('./scrapers/discudemy.js')
 async function getCourses() {
   const discudemyCourses = await discudemyScraper.getCourses() 
   const coursesData = await getUdemyData(discudemyCourses)
+  console.log(coursesData)
   return coursesData 
 }
 
@@ -71,6 +72,8 @@ async function stubData() {
     },
   ]
 }
+
+getCourses()
 
 module.exports = { getCourses, stubData }
 
