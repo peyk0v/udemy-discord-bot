@@ -2,9 +2,15 @@ const coursesProvider = require('./services/freeCourses')
 const Course = require('./schemas/course')
 
 async function checkForNewCourses() {
-  const coursesFromPage = await coursesProvider.stubData() //TODO: cambiar a la implementacion posta
-  const recentCourses = await getRecentCoursesFromDB() 
-  return getNonRecentlyPublishedCourses(coursesFromPage, recentCourses)
+  try {
+    const coursesFromPage = await coursesProvider.stubData() //TODO: cambiar a la implementacion posta
+    const recentCourses = await getRecentCoursesFromDB() 
+    return getNonRecentlyPublishedCourses(coursesFromPage, recentCourses)
+  } catch(e) {
+    //TODO: este error pasaria si no se pudo scrapear bien una page
+    //la idea seria, cuando un error ocurra, avisarme por mi server de discord
+    //asi puedo enterarme..
+  }
 }
 
 async function getRecentCoursesFromDB(cutoffDays = 5) { 
