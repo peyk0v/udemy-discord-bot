@@ -7,7 +7,7 @@ const openDatabaseConnection = require('./db')
 const { REGEXS } = require('./utils')
 const coursesProvider = require('./courses') 
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] })
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
 
 client.login(process.env.BOT_TOKEN)
 
@@ -37,6 +37,6 @@ const time = 1000 * 60 * 60 * 5 //ms sc mn hrs
 const scheduler = (client) => {
   setInterval(() => {
     coursesProvider.checkForNewCourses(client)
-  }, 1000 * 60) //TODO: cambiar por el 'time'
+  }, 1000 * 60 * 3) //TODO: cambiar por el 'time'
 }
 
