@@ -20,7 +20,7 @@ async function checkForNewCourses(client) {
 }
 
 async function getCoursesToPublish() {
-  const coursesFromPage = await coursesProvider.getCourses() //TODO: cambiar a la implementacion posta
+  const coursesFromPage = await coursesProvider.stubData() //TODO: cambiar a la implementacion posta
   const recentCourses = await getRecentCoursesFromDB() 
   return getNonRecentlyPublishedCourses(coursesFromPage, recentCourses)
 }

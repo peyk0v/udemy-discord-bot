@@ -1,7 +1,8 @@
 require('dotenv').config()
 const setChannel = require('./handlers/setChannel')
-const { Client, Intents } = require('discord.js')
 const sendHelpText = require('./handlers/help')
+const handleKick = require('./handlers/handleKick')
+const { Client, Intents } = require('discord.js')
 const openDatabaseConnection = require('./db')
 const { REGEXS } = require('./utils')
 const coursesProvider = require('./courses') 
@@ -26,11 +27,16 @@ client.on("messageCreate", (msg) => {
   } 
 })
 
+client.on('guildDelete', (guild) => {
+  console.log(`i was kicked from ${guild.name} id: ${guild.id}`)
+  handleKick(guild)
+})
+
 const time = 1000 * 60 * 60 * 5 //ms sc mn hrs
 
 const scheduler = (client) => {
   setInterval(() => {
     coursesProvider.checkForNewCourses(client)
-  }, 1000 * 60 * 20)
+  }, 1000 * 60) //TODO: cambiar por el 'time'
 }
 

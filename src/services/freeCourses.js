@@ -38,12 +38,12 @@ async function stubData() { //TODO: borrar esto
     {
       discudemyLink: 'yoo im a link',
       category: 'vue',
-      udemyLink: 'https://www.udemy.com/course/ciberseguridadenlinea/',
+      udemyLink: 'https://www.udemy.com/course/the-complete-web-development-bootcamp/',
       image: 'https://img-c.udemycdn.com/course/480x270/3624814_4744_3.jpg',
       title: 'how not to test by me',
       rating: '4,6',
       description: 'its the first course',
-      published: new Date() //SHOULD NOW PASS
+      published: new Date(2022, 2, 20) //SHOULD NOW PASS
     },
     {
       discudemyLink: 'asd',

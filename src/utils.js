@@ -107,7 +107,10 @@ async function sendCoursesToSuscribedServers(client, coursesToPublish) {
 
 async function sendCoursesToChannel(client, channelID, coursesToPublish) {
   const channel = await client.channels.cache.get(channelID)
-  if(!channel) { console.log(`error sending courses to channel ${channelID}`) }
+  if(!channel) { 
+    console.log(`error sending courses to channel ${channelID}`)
+    return
+  }
   console.log({coursesToPublish}) //TODO: es necesario tenerlo?
   for(let course of coursesToPublish) {
     await sendEmbedCourse(channel, course)
