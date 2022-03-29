@@ -2,11 +2,11 @@ const puppeteer = require('puppeteer')
 const createPageIn = require('./utils') 
 
 const languageRegex = /\/(english|spanish)\//gi
+const provider = process.env.COURSES_PROVIDER
 
-//TODO: ponerlos en variables de entorno
 const langLinks = [ 
-  english = 'https://www.discudemy.com/language/english',
-  spanish = 'https://www.discudemy.com/language/spanish'
+  english = provider + 'language/english',
+  spanish = provider + 'language/spanish'
 ]
 
 async function getCourses() {
@@ -64,7 +64,6 @@ async function getPageCourses(link) {
 async function getUdemyLink(link) {
   link = link.replace(languageRegex, '/go/')
   const { page, browser }= await createPageIn(link)
-  await page.screenshot({ fullPage: true, path: 'screenshot1.png'})
   await page.waitForSelector('#couponLink')
   const udemyLink = await page.evaluate(() => {
     return document.querySelector('#couponLink').text

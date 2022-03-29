@@ -7,6 +7,7 @@ const course_schema = new mongoose.Schema({
   image: String,
   title: String,
   rating: String,
+  description: String,
   published: Date
 })
 
