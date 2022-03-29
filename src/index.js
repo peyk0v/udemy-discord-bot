@@ -3,15 +3,15 @@ const setChannel = require('./handlers/setChannel')
 const { Client, Intents } = require('discord.js')
 const sendHelpText = require('./handlers/help')
 const openDatabaseConnection = require('./db')
-const { REGEXS, reportError } = require('./utils')
-//const coursesProvider = require('./courses') 
+const { REGEXS } = require('./utils')
+const coursesProvider = require('./courses') 
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] })
 
 client.login(process.env.BOT_TOKEN)
 
 client.on("ready", () => {
-  //TODO: aca tengo que poner la funcion principal
+  scheduler(client)
   openDatabaseConnection()
   console.log("bot is ready")
 })
@@ -23,13 +23,14 @@ client.on("messageCreate", (msg) => {
     setChannel(msg)
   } else if(msg.content.match(REGEXS.HELP)) {
     sendHelpText(msg)
-  }
+  } 
 })
 
-const coursesFounder = () => {
+const time = 1000 * 60 * 60 * 5 //ms sc mn hrs
+
+const scheduler = (client) => {
   setInterval(() => {
-    const currentDate = new Date().toUTCString()
-    console.log(`Running at: ${currentDate}`)
-    //coursesProvider.checkForNewCourses()
-  }, 20000)
+    coursesProvider.checkForNewCourses(client)
+  }, 1000 * 60 * 20)
 }
+

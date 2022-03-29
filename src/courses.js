@@ -1,16 +1,28 @@
 const coursesProvider = require('./services/freeCourses')
+const { reportError, sendCoursesToSuscribedServers } = require('./utils')
 const Course = require('./schemas/course')
 
-async function checkForNewCourses() {
+async function checkForNewCourses(client) {
   try {
-    const coursesFromPage = await coursesProvider.stubData() //TODO: cambiar a la implementacion posta
-    const recentCourses = await getRecentCoursesFromDB() 
-    return getNonRecentlyPublishedCourses(coursesFromPage, recentCourses)
+    const currentDate = new Date().toUTCString()
+    console.log(`Running at: ${currentDate}`)
+    const coursesToPublish = await getCoursesToPublish()
+    if(coursesToPublish.length == 0) {
+      return console.log(`${currentDate} NOT COURSES TO PUBLISH`)
+    } else {
+      sendCoursesToSuscribedServers(client, coursesToPublish)
+      await saveCoursesInDB(coursesToPublish)
+      return console.log(`${currentDate} FOUND ${coursesToPublish.length} NEW COURSES`)
+    }
   } catch(e) {
-    //TODO: este error pasaria si no se pudo scrapear bien una page
-    //la idea seria, cuando un error ocurra, avisarme por mi server de discord
-    //asi puedo enterarme..
+    reportError(client, e)
   }
+}
+
+async function getCoursesToPublish() {
+  const coursesFromPage = await coursesProvider.getCourses() //TODO: cambiar a la implementacion posta
+  const recentCourses = await getRecentCoursesFromDB() 
+  return getNonRecentlyPublishedCourses(coursesFromPage, recentCourses)
 }
 
 async function getRecentCoursesFromDB(cutoffDays = 5) { 
@@ -22,6 +34,13 @@ async function getRecentCoursesFromDB(cutoffDays = 5) {
 function getNonRecentlyPublishedCourses(coursesFromPage, recentCourses) {
   const linksOfRecentCourses = recentCourses.map(rc => rc.udemyLink)
   return coursesFromPage.filter(course => !linksOfRecentCourses.includes(course.udemyLink))
+}
+
+async function saveCoursesInDB(coursesToPublish) {
+  for(let course of coursesToPublish) {
+    const newCourse = new Course(course)
+    await newCourse.save()
+  }
 }
 
 module.exports = { checkForNewCourses }
