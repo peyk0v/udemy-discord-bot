@@ -5,7 +5,7 @@ async function setChannel(msg) {
   try {
     if(!hasPermissions(msg)) { return }
     const channel = getChannelToSet(msg)
-    await saveChannel(channel, msg.guild.id)
+    await saveChannel(channel, msg.guild)
     const text = createTextToSend(channel)
     sendEmbedMessage(msg, text, MSG_TYPE.SUCCESS)
   } catch (e) {
@@ -32,9 +32,9 @@ function verifyChannelNumber(channelNumber, channels) {
   }
 }
 
-async function saveChannel({ id, name }, serverID) {
-  const query = { server_id: serverID }
-  const update = { server_id: serverID, channel_id: id, channel_name: name }
+async function saveChannel({ id, name }, server) {
+  const query = { server_id: server.id }
+  const update = { server_name: server.name, server_id: server.id, channel_id: id, channel_name: name }
   const options = { upsert: true, new: true }
   return await Subscriber.findOneAndUpdate(query, update, options);
 }
