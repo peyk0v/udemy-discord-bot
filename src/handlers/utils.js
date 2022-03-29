@@ -1,3 +1,5 @@
+const { Permissions } = require('discord.js')
+
 const MSG_TYPE = {
   SUCCESS: Symbol('SUCCESS'),
   FAILURE: Symbol('FAILURE')
@@ -23,6 +25,12 @@ function sendEmbedMessage(msg, text, type) {
   msg.channel.send({ embeds: [{ color: type_color, description: textToSend }] })
 }
 
+function hasPermissions(msg) {
+  const isAdmin = msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)
+  const itsMe = msg.member.id == process.env.MY_DS_ID //dont worry, its just for setting up the bot for some friends :)
+  return isAdmin || itsMe
+}
 
-module.exports = { channelsFromServer, sendEmbedMessage, MSG_TYPE }
+
+module.exports = { channelsFromServer, sendEmbedMessage, MSG_TYPE, hasPermissions }
 

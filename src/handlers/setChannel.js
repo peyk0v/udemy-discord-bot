@@ -1,8 +1,9 @@
-const { channelsFromServer, sendEmbedMessage, MSG_TYPE } = require('./utils')
+const { channelsFromServer, sendEmbedMessage, MSG_TYPE, hasPermissions } = require('./utils')
 const Subscriber = require('../schemas/subscriber')
 
 async function setChannel(msg) { 
   try {
+    if(!hasPermissions(msg)) { return }
     const channel = getChannelToSet(msg)
     await saveChannel(channel, msg.guild.id)
     const text = createTextToSend(channel)

@@ -1,7 +1,8 @@
-const { channelsFromServer, sendEmbedMessage, MSG_TYPE } = require('./utils')
+const { channelsFromServer, sendEmbedMessage, MSG_TYPE, hasPermissions } = require('./utils')
 
 function sendHelpText(msg) {
   try {
+    if(!hasPermissions(msg)) { return }
     const channels = channelsFromServer(msg.guild)
     const channelsAsString = parseChannels(channels)
     const textToSend = createHelpText(channelsAsString)
