@@ -37,6 +37,6 @@ const time = 1000 * 60 * 60 * 5 //ms sc mn hrs
 const scheduler = (client) => {
   setInterval(() => {
     coursesProvider.checkForNewCourses(client)
-  }, 1000 * 60 * 3) //TODO: cambiar por el 'time'
+  }, time)
 }
 

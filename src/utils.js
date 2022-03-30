@@ -111,7 +111,6 @@ async function sendCoursesToChannel(client, channelID, coursesToPublish) {
     console.log(`error sending courses to channel ${channelID}`)
     return
   }
-  console.log({coursesToPublish}) //TODO: es necesario tenerlo?
   for(let course of coursesToPublish) {
     await sendEmbedCourse(channel, course)
   }
@@ -121,7 +120,7 @@ async function sendEmbedCourse(channel, course) {
   const categoryURL = CATEGORY_ICONS[course.category] ? CATEGORY_ICONS[course.category] : defaultCategoryImage
 
   const embed = new MessageEmbed()
-	  .setColor('#548f6f')
+	  .setColor('#9b59b6')
 	  .setTitle(course.title)
     .setURL(course.udemyLink)
 	  .setAuthor({ name: course.category, iconURL: categoryURL, url: categoryURL })

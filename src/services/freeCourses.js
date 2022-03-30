@@ -4,7 +4,6 @@ const discudemyScraper = require('./scrapers/discudemy.js')
 async function getCourses() {
   const discudemyCourses = await discudemyScraper.getCourses() 
   const coursesData = await getUdemyData(discudemyCourses)
-  console.log(coursesData) //TODO: borrar
   return coursesData 
 }
 
@@ -31,51 +30,6 @@ function wrapData(dCourse, courseDataFromUdemy) {
       description: courseDataFromUdemy.description,
       published: new Date()
     }
-}
-
-async function stubData() { //TODO: borrar esto
-  return [
-    {
-      discudemyLink: 'yoo im a link',
-      category: 'vue',
-      udemyLink: 'https://www.udemy.com/course/the-complete-web-development-bootcamp/',
-      image: 'https://img-c.udemycdn.com/course/480x270/3624814_4744_3.jpg',
-      title: 'how not to test by me',
-      rating: '4,6',
-      description: 'its the first course',
-      published: new Date(2022, 2, 20) //SHOULD NOW PASS
-    },
-    {
-      discudemyLink: 'asd',
-      category: 'vue',
-      udemyLink: 'https://www.udemy.com/course/vue-3-js-iniciate-en-este-framework/',
-      image: 'https://img-c.udemycdn.com/course/480x270/3624814_4744_3.jpg',
-      title: 'im in lol',
-      rating: '4,6',
-      description: 'its the second course',
-      published: new Date(2022, 2, 23) //SHOULD PASS 
-    },
-    {
-      discudemyLink: 'https://www.discudemy.com/Spanish/aws-rds-con-mysql',
-      category: 'aws',
-      udemyLink: 'https://www.udemy.com/course/aws-rds-con-mysql/',
-      image: 'https://img-c.udemycdn.com/course/480x270/3699980_a3b1.jpg',
-      title: 'AWS RDS con MySQL desde 0',
-      rating: '4,7',
-      description: 'its the third course',
-      published: new Date() //SHOULD PASS
-    },
-    {
-      discudemyLink: 'https://www.discudemy.com/Spanish/inventario-capacidad-y-demanda-en-facil',
-      category: 'business',
-      udemyLink: 'https://www.udemy.com/course/inventario-capacidad-y-demanda-en-facil/',
-      image: 'https://img-c.udemycdn.com/course/480x270/3552857_7601_3.jpg',
-      title: 'Inventario, Capacidad y Demanda en Fácil',
-      rating: '4,8',
-      description: 'its the ?? course',
-      published: new Date() //SHOULD NOW PASS
-    },
-  ]
 }
 
 module.exports = { getCourses, stubData }
