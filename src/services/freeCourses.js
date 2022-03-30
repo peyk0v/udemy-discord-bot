@@ -32,5 +32,5 @@ function wrapData(dCourse, courseDataFromUdemy) {
     }
 }
 
-module.exports = { getCourses, stubData }
+module.exports = { getCourses }
 
