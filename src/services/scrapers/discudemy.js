@@ -39,6 +39,7 @@ async function getUdemyLinksFromPage(link) {
 
 async function getPageCourses(link) {
   const { page, browser } = await createPageIn(link)
+  await page.waitForSelector('.card')
 
   const courseLinks = await page.evaluate(() => {
     const elements = document.querySelectorAll('.card')
