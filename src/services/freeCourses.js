@@ -12,6 +12,7 @@ async function getUdemyData(dCourses) {
 
   for(let dCourse of dCourses) {
     const courseDataFromUdemy = await udemyScraper.getPageData(dCourse.udemyLink)
+    if(courseDataFromUdemy == undefined) { continue }
     const freeCourseData = wrapData(dCourse, courseDataFromUdemy)
     coursesData.push(freeCourseData)
   }

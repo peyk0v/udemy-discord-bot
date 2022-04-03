@@ -24,7 +24,7 @@ client.on("messageCreate", (msg) => {
     setChannel(msg)
   } else if(msg.content.match(REGEXS.HELP)) {
     sendHelpText(msg)
-  } 
+  }
 })
 
 client.on('guildDelete', (guild) => {
