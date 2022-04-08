@@ -81,7 +81,7 @@ const defaultCategoryImage = 'https://flyclipart.com/thumb2/dibujo-del-signo-de-
 
 const REGEXS = {
   SET_CHANNEL: /^!fc_setchannel\ +[0-9]+$/im,
-  HELP: /^!fc_help\ *$/im
+  START: /^!fc_start\ *$/im
 }
 
 async function reportError(client, error) {

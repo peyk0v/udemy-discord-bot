@@ -1,6 +1,6 @@
 require('dotenv').config()
 const setChannel = require('./handlers/setChannel')
-const sendHelpText = require('./handlers/help')
+const sendStartText = require('./handlers/start')
 const handleKick = require('./handlers/handleKick')
 const { Client, Intents } = require('discord.js')
 const openDatabaseConnection = require('./db')
@@ -22,8 +22,8 @@ client.on("messageCreate", (msg) => {
 
   if(msg.content.match(REGEXS.SET_CHANNEL)) {
     setChannel(msg)
-  } else if(msg.content.match(REGEXS.HELP)) {
-    sendHelpText(msg)
+  } else if(msg.content.match(REGEXS.START)) {
+    sendStartText(msg)
   }
 })
 

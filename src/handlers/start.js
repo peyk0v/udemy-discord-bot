@@ -1,11 +1,11 @@
 const { channelsFromServer, sendEmbedMessage, MSG_TYPE, hasPermissions } = require('./utils')
 
-function sendHelpText(msg) {
+function sendStartText(msg) {
   try {
     if(!hasPermissions(msg)) { return }
     const channels = channelsFromServer(msg.guild)
     const channelsAsString = parseChannels(channels)
-    const textToSend = createHelpText(channelsAsString)
+    const textToSend = createStartText(channelsAsString)
     sendEmbedMessage(msg, textToSend, MSG_TYPE.SUCCESS)
   } catch(e) {
     sendEmbedMessage(msg, e.message, MSG_TYPE.FAILURE)
@@ -20,14 +20,14 @@ function parseChannels(channels) {
   return text
 }
 
-function createHelpText(channelsAsString) {
-  const header = 'I see you are lost.. LOL' 
+function createStartText(channelsAsString) {
+  const header = '**:wave: hi, welcome! **' 
     + '\n\n'
-    + 'There is not much to it to set up the bot.'
+    + 'Here is a guide to set up the bot'
     + '\n\n'
-    + 'You only have to set which channel will be the target for the bot to publish the found courses.'
+    + 'There is not much to it, you only have to set which channel will be the target for the bot to publish the found courses'
     + '\n\n'
-    + 'So before starting, make sure to ***set a channel***.'
+    + 'So before starting, make sure to ***set a channel***, otherwise you wont receive the courses'
     + '\n\n'
     + 'It can be done by `!fc_setChannel number`'
     + '\n'
@@ -39,5 +39,5 @@ function createHelpText(channelsAsString) {
   return header + channelsAsString + footer
 }
 
-module.exports = sendHelpText
+module.exports = sendStartText
 
