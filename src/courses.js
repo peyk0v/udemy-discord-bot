@@ -12,6 +12,7 @@ async function checkForNewCourses(client) {
     } else {
       sendCoursesToSuscribedServers(client, coursesToPublish)
       await saveCoursesInDB(coursesToPublish)
+      await clearOldCoursesFromDB()
       return console.log(`${currentDate} FOUND ${coursesToPublish.length} NEW COURSES`)
     }
   } catch(e) {
@@ -26,8 +27,7 @@ async function getCoursesToPublish() {
 }
 
 async function getRecentCoursesFromDB(cutoffDays = 5) { 
-  const cutoff = new Date()
-  cutoff.setDate(cutoff.getDate() - cutoffDays);
+  const cutoff = getDateFromDaysBefore(cutoffDays)
   return await Course.find({ published: { $gte: cutoff, $lte: new Date() }})
 }
 
@@ -43,5 +43,17 @@ async function saveCoursesInDB(coursesToPublish) {
   }
 }
 
-module.exports = { checkForNewCourses }
+//space in db isn't unlimited :P
+async function clearOldCoursesFromDB() {
+  const cutoff = getDateFromDaysBefore(20) //i think 20 days is enough
+  return await Course.deleteMany({ published: { $lte: cutoff }})
+}
+
+function getDateFromDaysBefore(days) {
+  const cutoff = new Date()
+  cutoff.setDate(cutoff.getDate() - days);
+  return cutoff
+}
+
+module.exports = { checkForNewCourses, saveCoursesInDB, clearOldCoursesFromDB }
 
