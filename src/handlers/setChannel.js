@@ -21,8 +21,8 @@ function getChannelToSet({ content, guild }) {
 }
 
 function numberLineFromText(text) {
-  const textWithoutExtraSpaces = text.replace(/[\ ]+/, ' ')
-  return textWithoutExtraSpaces.split(/\ /)[1]
+	const textWithoutExtraSpaces = text.replace(/[\ ]+/, ' ')
+	return textWithoutExtraSpaces.split(/\ /)[1]
 }
 
 function verifyChannelNumber(channelNumber, channels) {

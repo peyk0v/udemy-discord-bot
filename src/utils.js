@@ -120,14 +120,14 @@ async function sendEmbedCourse(channel, course) {
   const categoryURL = CATEGORY_ICONS[course.category] ? CATEGORY_ICONS[course.category] : defaultCategoryImage
 
   const embed = new MessageEmbed()
-	  .setColor('#9b59b6')
-	  .setTitle(course.title)
-    .setURL(course.udemyLink)
-	  .setAuthor({ name: course.category, iconURL: categoryURL, url: categoryURL })
-    .setDescription(course.description)
-	  .addFields({ name: 'Rating', value: course.rating })
-	  .setImage(course.image)
-    .setTimestamp()
+		.setColor('#9b59b6')
+		.setTitle(course.title)
+		.setURL(course.udemyLink)
+		.setAuthor({ name: course.category, iconURL: categoryURL, url: categoryURL })
+		.setDescription(course.description)
+		.addFields({ name: 'Rating', value: course.rating })
+		.setImage(course.image)
+		.setTimestamp()
 
 	return await channel.send({embeds: [embed]})
 }
