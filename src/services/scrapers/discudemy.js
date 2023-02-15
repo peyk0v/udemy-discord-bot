@@ -5,8 +5,8 @@ const languageRegex = /\/(english|spanish)\//gi
 const provider = process.env.COURSES_PROVIDER
 
 const langLinks = [ 
-  english = provider + 'language/english',
-  spanish = provider + 'language/spanish'
+  english = provider + '/language/english',
+  spanish = provider + '/language/spanish'
 ]
 
 async function getCourses() {
