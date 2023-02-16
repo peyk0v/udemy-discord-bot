@@ -1,16 +1,11 @@
-//import createPageIn from './utils' 
 const createPageIn = require('./utils.js')
 
 async function getPageData(url) {
   const { page, browser } = await createPageIn(url)
-	console.log(url)
   
   const data = await page.evaluate(() => {
     const titleComponent = document.querySelector('.course-landing-page__main-content div h1')
-		//it's not rendered
-    if(titleComponent == null) { 
-			return undefined 
-		} 
+    if(titleComponent == null) { return undefined } //it's not rendered
     const imageUrl = document.querySelector("meta[property='og:image']").getAttribute("content");
     const title = titleComponent.textContent
     const rating = document.querySelector('.clp-lead__element-item--row .ud-heading-sm').textContent

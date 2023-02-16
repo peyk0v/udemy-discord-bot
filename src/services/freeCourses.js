@@ -10,10 +10,7 @@ async function getCourses() {
 async function getUdemyData(dCourses) {
   let coursesData = []
 
-	//TODO: borrar el console log
-	console.log({dCourses})
   for(let dCourse of dCourses) {
-		console.log(`get info for page ${dCourse.udemyLink}`)
     const courseDataFromUdemy = await udemyScraper.getPageData(dCourse.udemyLink)
     if(courseDataFromUdemy == undefined) { continue }
     const freeCourseData = wrapData(dCourse, courseDataFromUdemy)
