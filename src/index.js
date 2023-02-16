@@ -12,10 +12,8 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 client.login(process.env.BOT_TOKEN)
 
 client.on("ready", () => {
-	// instead of waiting for the schedule, run the code at beginning
-  //scheduler(client)
+  scheduler(client)
   openDatabaseConnection()
-	coursesProvider.checkForNewCourses(client)
   console.log("bot is ready")
 })
 
@@ -34,10 +32,11 @@ client.on('guildDelete', (guild) => {
   handleKick(guild)
 })
 
+// time = 5 hours
 const time = 1000 * 60 * 60 * 5 //ms sc mn hrs
 
 const scheduler = (client) => {
-  setInterval(() => {
+	setInterval(() => {
     coursesProvider.checkForNewCourses(client)
   }, time)
 }
