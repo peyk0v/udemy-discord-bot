@@ -40,7 +40,7 @@ async function saveChannel({ id, name }, server) {
 }
 
 function createTextToSend(channel) {
-  return `***${channel.name}*** has been set as receiver`
+  return `***${channel.name}*** has been set correctly`
 }
 
 module.exports = setChannel
