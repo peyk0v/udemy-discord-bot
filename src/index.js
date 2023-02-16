@@ -12,8 +12,10 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 client.login(process.env.BOT_TOKEN)
 
 client.on("ready", () => {
-  scheduler(client)
+	// instead of waiting for the schedule, run the code at beginning
+  //scheduler(client)
   openDatabaseConnection()
+	coursesProvider.checkForNewCourses(client)
   console.log("bot is ready")
 })
 

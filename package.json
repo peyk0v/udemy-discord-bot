@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "18.x",
+    "npm": "9.x"
   },
   "scripts": {
     "start": "NODE_ENV=production node src/index.js",
     "dev": "NODE_ENV=development nodemon src/index.js",
-		"lint": "eslint .",
+    "lint": "eslint .",
     "test": "NODE_ENV=development jest"
   },
   "keywords": [],
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "3.0.1",
+    "eslint": "^8.34.0",
     "jest": "28.1.0",
     "nodemon": "2.0.15"
   }
